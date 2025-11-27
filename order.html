@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slycee Delivery Services</title>
+  <style>
+    /* Replace 'background.jpg' with your image path or URL */
+    :root{
+      --bg-image: url('h1.jpg');
+      --accent: 200, 230, 255; /* light bluish accent rgb values for outlines */
+    }
+
+    *{box-sizing: border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color: #070700;
+      background-image: var(--bg-image);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* full-screen subtle overlay to darken/lighten background for contrast */
+    .page-overlay{
+      position:fixed; inset:0; pointer-events:none;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.45) 60%);
+      z-index:0;
+    }
+
+    /* Centering container */
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:2rem;
+      position:relative;
+      z-index:1;
+    }
+
+    /* Transparent "glass" form card */
+    .card{
+      width:100%;
+      max-width:980px;
+      background: rgba(255,255,255,0.06); /* semi-transparent */
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.45);
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      border-radius: 14px;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr 420px; /* left: form, right: summary/graphic */
+    }
+
+    /* Right column for visual or summary */
+    .card-aside{
+      padding:28px;
+      border-left:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+
+    .brand{
+      display:flex;gap:12px;align-items:center;margin-bottom:6px;
+    }
+    .logo{
+      width:48px;height:48px;border-radius:10px;background:rgba(var(--accent),0.08);display:flex;align-items:center;justify-content:center;font-weight:700;color:rgba(var(--accent),1)
+    }
+
+    .card-body{
+      padding:28px 30px;
+    }
+
+    h1{margin:0 0 8px 0;font-size:1.4rem}
+    p.lead{margin:0 0 18px 0;opacity:0.9}
+
+    form{display:block}
+    .form-grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+    }
+
+    label{font-size:1.3rem;display:block;margin-bottom:6px}
+    input[type=text], input[type=tel], input[type=date], select, textarea{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.25);
+      color: #f8f8f8;
+      outline:none;
+      font-size:0.95rem;
+    }
+    input:focus, select:focus, textarea:focus{box-shadow:0 0 0 4px rgba(var(--accent),0.06);border-color:rgba(var(--accent),0.6)}
+
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+    .actions{display:flex;gap:12px;align-items:center;margin-top:10px}
+    button{
+      padding:10px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer;
+      background: linear-gradient(180deg, rgba(6, 99, 102, 0.06), rgba(255,255,255,0.03));
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    button.primary{background: linear-gradient(180deg, rgba(30,160,255,0.95), rgba(20,120,220,0.95));}
+
+    .muted{opacity:0.85;font-size:0.9rem}
+
+    /* small helper text */
+    .hint{font-size:0.82rem;opacity:0.8}
+
+    /* result message */
+    .result{margin-top:12px;padding:12px;border-radius:8px;background:rgba(0,0,0,0.25);display:none}
+    .result.show{display:block}
+
+    /* Responsive adjustments */
+    @media (max-width:980px){
+      .card{grid-template-columns:1fr}
+      .card-aside{display:none}
+      .card-body{padding:20px}
+    }
+
+    @media (max-width:520px){
+      .wrap{padding:1rem}
+      h1{font-size:1.15rem}
+      .logo{width:40px;height:40px}
+    }
+
+    /* file input styling (simple) */
+    input[type=file]{padding:6px}
+
+    /* subtle form separators */
+    .section-title{margin-top:8px;margin-bottom:6px;font-size:0.95rem}
+
+    /* accessibility focus outline for keyboard users */
+    :focus{outline: 3px solid rgba(var(--accent),0.12);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <div class="page-overlay" aria-hidden="true"></div>
+  <main class="wrap">
+    <section class="card" aria-labelledby="formTitle">
+
+      <div class="card-body">
+        <div class="brand">
+          <img class="logo" src="h1.jpg" alt="Slycee Delivery">
+          <div>
+            <strong>Slycee Delivery</strong>
+          </div>
+        </div>
+
+        <h1 id="formTitle">Slycee Delivery Services</h1>
+        <p class="lead muted">fill out the form, and we will contact you as soon as possible to discuss the details.</p>
+
+         <form class="" action="https://formspree.io/f/manawojg" method="post">
+        <div class="row">
+          <div class="two-col">
+          <div class="col-lg-6 form-group mb-4">
+            <label for="firstName">Full Name</label>
+            <input type="text" placeholder="Your full name" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="name" required />
+          </div>
+          <div class="col-lg-6 form-group mb-4">
+            <label for="lastName">Phone Number</label>
+            <input type="tel" placeholder="Phone number" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="phone" required />
+          </div>
+          </div>
+          <div class="col-lg-12 form-group mb-4">
+            <label for="Instructions for the courier🛵">Instructions for the courier🛵</label>
+            <select class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="instructions" required>
+              <option value="Meet at the door">Meet at the door🚶‍♂️</option>
+              <option value="Leave at the door">Leave at the door🚪</option>
+            </select>
+          </div><br>
+          <div class="two-col">
+          <div class="col-lg-6 form-group mb-4">
+           <label for="from">Pick up:🛵</label>
+            <input type="text" placeholder="Enter your Pickup loc" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="move_from" required />
+          </div>
+          
+          <div class="col-lg-6 form-group mb-4">
+            <label for="to">Drop off:📩</label>
+            <input type="text" placeholder="Enter your Drop loc" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="move_to" required />
+          </div>
+          </div><br>
+          <div class="col-lg-6 form-group mb-4">
+            <label for="Click to Add Date⬇️">Click to Add Date⬇️</label>
+            <input type="date" class="w-full h-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="date" required />
+          </div>
+          <div class="col-lg-12 form-group mb-4">
+            <p>Add your product info⬇️</p>
+          </div>
+          <div class="col-lg-12 form-group mb-4">
+            <textarea placeholder="Please add your Product details" rows="4" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="product_details" required></textarea>
+         </div><br>
+          <div class="col-lg-12 form-group mb-4">
+            <label for="payment_method">Payment Method⬇️</label>
+            <select class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="payment_method" required>
+              <option value="Cash">Cash💰</option>
+              <option value="Online">Mobile Payment📱</option>
+            </select>
+          </div>
+            <div class="actions">
+              <button type="submit" class="primary">Send request</button>
+              <button type="reset">Reset</button>
+              <div id="result" class="result" role="status" aria-live="polite"></div>
+            </div>
+      </div>
+          </div>
+         </form>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Simple client-side validation & feedback
+    (function(){
+      const form = document.getElementById('mainForm');
+      const result = document.getElementById('result');
+
+      function showMessage(type, text){
+        result.className = 'result show';
+        result.textContent = text;
+        if(type === 'ok') result.style.borderLeft = '4px solid rgba(80,200,120,0.9)';
+        else result.style.borderLeft = '4px solid rgba(255,110,110,0.9)';
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        result.className = 'result';
+
+        // collect inputs
+        const f = new FormData(form);
+        const first = f.get('firstName')?.trim();
+        const last = f.get('lastName')?.trim();
+        const email = f.get('email')?.trim();
+
+        if(!first || !last){
+          showMessage('err', 'Please provide your first and last name.');
+          return;
+        }
+
+
+        // Basic file size check (client-only)
+        const file = form.querySelector('input[type=file]').files[0];
+        if(file && file.size > 5 * 1024 * 1024){
+          showMessage('err', 'Attached file is too large (max 5MB).');
+          return;
+        }
+
+        // Simulate sending (replace with actual fetch to your endpoint)
+        const payload = {};
+        for(const [k,v] of f.entries()) payload[k]= v;
+        console.log('form payload', payload);
+
+        // show success
+        showMessage('ok', 'Thanks! Your message has been received (demo).');
+        form.reset();
+      });
+    })();
+  </script>
+
+  <!-- Usage notes:
+       1) Replace the CSS variable --bg-image with your background image path.
+       2) To wire the form to a backend, replace the simulated send area in JS with fetch()/XHR.
+  -->
+</body>
+</html>
