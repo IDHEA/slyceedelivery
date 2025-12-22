@@ -157,11 +157,11 @@
         <div class="brand">
           <img class="logo" src="h1.jpg" alt="Slycee Delivery">
           <div>
-            <strong>SLYCEE DELIVERY</strong>
+            <strong>Slycee Delivery</strong>
           </div>
         </div>
 
-        <h1 id="formTitle">SLYCEE OKADA SERVICE</h1>
+        <h1 id="formTitle">Slycee Delivery Services</h1>
         <p class="lead muted">fill out the form, and we will contact you as soon as possible to discuss the details.</p>
 
          <form class="" action="https://formspree.io/f/manawojg" method="post">
@@ -199,15 +199,19 @@
             <input type="date" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="date" required />
           </div><br>
           <div class="col-lg-12 form-group mb-4">
-            <label for="Message for rider⬇️">MESSAGE TO THE RIDER⬇️</label>
+            <label for="Message for rider⬇️">Message for rider⬇️</label>
             <textarea placeholder="Enter your message" rows="4" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="product_details" required></textarea>
          </div><br>
           <div class="col-lg-12 form-group mb-4">
             <label for="payment_method">Payment Method⬇️</label>
-            <select class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="payment_method" required>
-              <option value="Cash">Cash💰</option>
-              <option value="Online">Mobile Money payment📱</option>
-            </select>
+             <div class="flex items-center">
+              <input id="cash" type="radio" name="payment_method" value="Cash" required class="mr-2"
+              label for="cash" class="text-sm">Cash</label>
+            </div><br>
+            <div class="flex items-center">
+              <input id="online" type="radio" name="payment_method" value="Online" required class="mr-2"
+              label for="online" class="text-sm" style="color:white"><a href="momo.html">Mobile Money</a></label>
+            </div>
           </div>
             <div class="actions">
               <button type="submit" class="primary">Send request</button>
