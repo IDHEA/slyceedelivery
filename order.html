@@ -206,10 +206,14 @@
          </div><br>
           <div class="col-lg-12 form-group mb-4">
             <label for="payment_method">Payment Method⬇️</label>
-            <select class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" name="payment_method" required>
-              <option value="Cash">Cash💰</option>
-              <option value="Online"><a href="mommo.html">Mobile Money</a></option>
-            </select>
+            <div class="flex items-center">
+              <input id="cash" type="radio" name="payment_method" value="Cash" required class="mr-2"
+              label for="cash" class="text-sm">Cash</label>
+            </div><br>
+            <div class="flex items-center">
+              <input id="online" type="radio" name="payment_method" value="Online" required class="mr-2"
+              label for="online" class="text-sm" style="color:white"><a href="momo.html">Mobile Money</a></label>
+            </div>
           </div>
             <div class="actions">
               <button type="submit" class="primary">Send request</button>
