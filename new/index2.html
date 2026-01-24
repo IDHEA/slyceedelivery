@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Slycee foods</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#fdf5ff;
+}
+
+/* page visibility */
+.page{ display:none; }
+.page.active{ display:block; }
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  padding:14px;
+  align-items:center;
+}
+
+.user{ display:flex; align-items:center; gap:8px; font-weight:bold; }
+.user img{ width:42px; border-radius:50%; }
+
+.branch-btn{
+  background:rgb(119, 51, 197); color:white;
+  border:none; border-radius:999px;
+  padding:8px 12px; font-size:12px;
+}
+
+.cart{ font-size:26px; position:relative; cursor:pointer; }
+.badge{
+  position:absolute; top:-6px; right:-6px;
+  width:18px; height:18px;
+  background:rgb(143, 89, 204); color:white;
+  font-size:10px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+
+    /* Banner */
+    .banner {
+      margin: 0 16px;
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .banner img {
+      width: 100%;
+    }
+
+/* product cards */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px; padding:14px;
+}
+.card{
+  background:white; border-radius:18px;
+  padding:8px; box-shadow:0 3px 15px rgba(0,0,0,0.1);
+}
+.card img{ width:100%; border-radius:14px; }
+.item-title{ font-size:12px; font-weight:bold; margin-top:6px; }
+
+/* cart page */
+.cart-item{
+  background:white; margin:10px; padding:10px;
+  border-radius:14px; display:flex;
+  gap:10px; justify-content:space-between; align-items:center;
+}
+.cart-item img{ width:70px; border-radius:12px; }
+.qty-box{ display:flex; gap:6px; align-items:center; }
+
+.total-box{ padding:16px; font-size:18px; font-weight:bold; }
+
+/* checkout form */
+.checkout-box{
+  background:white; margin:12px; padding:14px; border-radius:16px;
+}
+.checkout-box input, .checkout-box textarea, .checkout-box select{
+  width:100%; padding:8px; margin-top:6px;
+  border-radius:10px; border:1px solid #ccc;
+}
+
+/* bottom nav */
+.bottom-nav{
+  position:fixed; bottom:8px; left:50%; transform:translateX(-50%);
+  width:92%; background:white;
+  display:flex; justify-content:space-around;
+  border-radius:26px; padding:10px 0;
+  box-shadow:0 6px 25px rgba(0,0,0,0.15);
+}
+ button {
+      width: calc(100% - 32px);
+      margin: 16px;
+      padding: 14px;
+      border-radius: 999px;
+      font-size: 16px;
+      background: rgb(148, 51, 228);
+      color: rgb(247, 245, 245);
+      border: none;  
+    }
+</style>
+</head>
+
+<body>
+
+<!-- HOME PAGE -->
+<div id="homePage" class="page active">
+  <div class="header">
+    <div class="user">
+      <img src="sly.jpeg">
+      <b>Slycee foods</b>
+    </div>
+
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button class="branch-btn">KASOA BRANCH</button>
+
+      <div class="cart" onclick="openCartPage()">
+        🛒 <div class="badge" id="cartCount">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <img src="download (5).jpg" alt="">
+  </div>
+
+
+  <!-- Popular Buckets -->
+  <h2 style="padding:10px;" >Main Meals</h2>
+  <div class="cards" id="productList"></div>
+</div>
+
+
+<!-- CART PAGE -->
+<div id="cartPage" class="page">
+  <div class="header">
+    <strong>🛒 Your Cart</strong>
+    <button onclick="openHomePage()">Back</button>
+  </div>
+
+  <div id="cartItems"></div>
+
+  <div class="total-box">
+    Total: &#8373;<span id="totalPrice">0</span>
+  </div>
+
+  <div style="padding:14px;">
+    <button onclick="openCheckoutPage()" style="width:90%; padding:12px; border-radius:14px; background:rgb(17, 133, 36); color:white; border:none;">
+      Proceed to Checkout
+    </button>
+  </div>
+</div>
+
+
+<!-- CHECKOUT PAGE -->
+<div id="checkoutPage" class="page">
+
+  <div class="header">
+    <strong>✔ Checkout</strong>
+    <button onclick="openCartPage()">Back</button>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="checkout-box">
+    <strong>Order Summary</strong>
+    <div id="summaryBox"></div>
+    <p><b>Total: &#8373;<span id="checkoutTotal">0</span></b></p>
+  </div>
+
+  <!-- Customer info -->
+  <div class="checkout-box">
+    <strong>Delivery Details</strong>
+
+    <label>Name</label>
+    <input id="custName" placeholder="Your name">
+
+    <label>Phone</label>
+    <input id="custPhone" placeholder="Phone number">
+
+    <label>Address</label>
+    <textarea id="custAddress" rows="3" placeholder="Delivery address"></textarea>
+  </div>
+
+  <!-- Delivery or Pickup -->
+  <div class="checkout-box">
+    <strong>Order Type</strong>
+    <select id="orderType">
+      <option value="delivery">Delivery</option>
+      <option value="pickup">Pickup</option>
+    </select>
+  </div>
+
+  <!-- Payment method -->
+  <div class="checkout-box">
+    <strong>Payment Method</strong>
+    <select id="paymentMethod">
+      <option value="cash">Cash on Delivery</option>
+      <option value="card">Momo</option>
+    </select>
+  </div>
+
+  <div style="padding:14px;">
+    <button onclick="placeOrder()"
+      style="width: 90%; padding:12px; border-radius:14px; background:green; color:white; border:none;">
+      Place Order
+    </button>
+  </div>
+
+</div>
+
+
+
+
+
+<script>
+// products
+const products = [
+  {name:"Pizza maxi bucket", price:130, img:"download (3).jpg"},
+  {name:"Ghana rice stew", price:52, img:"d1.jpg"},
+  {name:"Jollof rice", price:80, img:"j1.jpg"},
+  {name:"Chicken bucket meal", price:70, img:"download (5).jpg"},
+];
+
+let cart = [];
+
+/* ---------- PAGE NAVIGATION ---------- */
+function show(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(page).classList.add("active");
+}
+
+function openHomePage(){ show("homePage"); }
+function openCartPage(){ show("cartPage"); renderCart(); }
+function openCheckoutPage(){ show("checkoutPage"); renderCheckout(); }
+
+/* ---------- PRODUCTS ---------- */
+function renderProducts(){
+  const box = document.getElementById("productList");
+  box.innerHTML="";
+  products.forEach((p,i)=>{
+    box.innerHTML += `
+      <div class="card">
+        <img src="${p.img}">
+        <div class="item-title">${p.name}</div>
+        <div>Price: &#8373;${p.price}</div>
+        <button onclick="addToCart(${i})">Add to cart</button>
+      </div>`;
+  });
+}
+renderProducts();
+
+/* ---------- CART ---------- */
+function addToCart(i){
+  const item = products[i];
+  const found = cart.find(p=>p.name===item.name);
+  if(found) found.qty++;
+  else cart.push({...item, qty:1});
+  updateBadge();
+}
+
+function updateBadge(){
+  document.getElementById("cartCount").innerText =
+    cart.reduce((sum,p)=>sum+p.qty,0);
+}
+
+function renderCart(){
+  const box = document.getElementById("cartItems");
+  box.innerHTML="";
+  let total=0;
+
+  cart.forEach((item,index)=>{
+    total += item.price * item.qty;
+
+    box.innerHTML += `
+      <div class="cart-item">
+        <img src="${item.img}">
+        <div style="flex:1;">
+          <div>${item.name}</div>
+          <div>$${item.price}</div>
+        </div>
+
+        <div class="qty-box">
+          <button onclick="decrease(${index})">-</button>
+          ${item.qty}
+          <button onclick="increase(${index})">+</button>
+        </div>
+
+        <button onclick="removeItem(${index})">Remove</button>
+      </div>`;
+  });
+
+  document.getElementById("totalPrice").innerText = total;
+}
+
+function increase(i){ cart[i].qty++; renderCart(); updateBadge(); }
+function decrease(i){
+  if(cart[i].qty>1) cart[i].qty--;
+  else cart.splice(i,1);
+  renderCart(); updateBadge();
+}
+function removeItem(i){
+  cart.splice(i,1);
+  renderCart(); updateBadge();
+}
+
+/* ---------- CHECKOUT ---------- */
+function renderCheckout(){
+  const box = document.getElementById("summaryBox");
+  let total=0;
+  box.innerHTML="";
+
+  cart.forEach(item=>{
+    total += item.price * item.qty;
+    box.innerHTML += `<p>${item.qty} × ${item.name}</p>`;
+  });
+
+  document.getElementById("checkoutTotal").innerText = total;
+}
+
+function placeOrder(){
+  if(cart.length===0){
+    alert("Your cart is empty.");
+    return;
+  }
+
+  if(!custName.value || !custPhone.value){
+    alert("Please fill in your name and phone.");
+    return;
+  }
+
+  alert("🎉 Order placed successfully!\nThank you for ordering.");
+  cart = [];
+  updateBadge();
+  openHomePage();
+}
+</script>
+
+</body>
+</html>

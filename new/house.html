@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Izi Flips - Appliances</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #5fa2ff;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .contact-btn {
+      background: #e53935;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    h2.section-title {
+      text-align: center;
+      margin: 30px 0 10px;
+      color: #000;
+      letter-spacing: 1px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px 40px;
+    }
+
+    .card {
+      background: #e6e6dc;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 8px;
+    }
+
+    .brand {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .price {
+      color: #e53935;
+      font-size: 14px;
+      margin: 6px 0;
+    }
+
+    .desc {
+      font-size: 13px;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .order-btn {
+      background: #00a8b5;
+      border: none;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <strong>Izi Flips</strong>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Food</a>
+    <a href="#">Meds</a>
+    <a href="#">About</a>
+  </nav>
+  <button class="contact-btn">Contact Us</button>
+</header>
+
+<!-- TVs -->
+<h2 class="section-title">TVs</h2>
+<div class="products" id="tvs"></div>
+
+<!-- Washing Machines -->
+<h2 class="section-title">WASHING MACHINES</h2>
+<div class="products" id="washers"></div>
+
+<!-- Air Conditions -->
+<h2 class="section-title">AIR-CONDITIONS</h2>
+<div class="products" id="aircons"></div>
+
+<!-- Refrigerators -->
+<h2 class="section-title">REFRIGERATORS</h2>
+<div class="products" id="fridges"></div>
+
+<!-- Gas Cookers -->
+<h2 class="section-title">GAS COOKERS</h2>
+<div class="products" id="cookers"></div>
+
+<footer>
+  © 2025 Izi Flips. All rights reserved.
+</footer>
+
+<script>
+const data = {
+  tvs: [
+    { brand: "TCL", price: "GHC 5,490", desc: "TCL smart televisions. Latest tech. 55\" inches", img: "img/h1.jpg" },
+    { brand: "LG", price: "GHC 8,700", desc: "LG smart televisions. 55\" inches", img: "images/lg_tv.png" },
+    { brand: "Samsung", price: "GHC 9,000", desc: "Samsung ultra-modern smart televisions. 55\" inches", img: "images/samsung_tv.png" }
+  ],
+  washers: [
+    { brand: "Samsung Ultra modern", price: "GHC 7,000", desc: "Samsung ultra modern washing machines", img: "images/samsung_washer1.png" },
+    { brand: "LG", price: "GHC 7,399", desc: "LG super sonic washing machines", img: "images/lg_washer.png" },
+    { brand: "Samsung", price: "GHC 4,000", desc: "Samsung washing machines fast and effective", img: "images/samsung_washer2.png" }
+  ],
+  aircons: [
+    { brand: "TCL", price: "GHC 8,000", desc: "TCL modern air-conditions. All types available.", img: "images/tcl_aircon.png" },
+    { brand: "LG", price: "GHC 6,400", desc: "LG modern air-conditions available.", img: "images/lg_aircon.png" },
+    { brand: "Samsung", price: "GHC 6,600", desc: "Samsung ultra-modern air-conditions available.", img: "images/samsung_aircon.png" }
+  ],
+  fridges: [
+    { brand: "Pearl", price: "GHC 5,800", desc: "A double door fridge with dispenser", img: "images/pearl_fridge.png" },
+    { brand: "Samsung", price: "GHC 26,000", desc: "Samsung side by side refrigerator with touch screen", img: "images/samsung_fridge.png" },
+    { brand: "LG", price: "GHC 3,600", desc: "Double door with bottom freezer", img: "images/lg_fridge.png" }
+  ],
+  cookers: [
+    { brand: "Binatone", price: "GHC 700", desc: "High quality Binatone gas cooker", img: "images/binatone_cooker.png" },
+    { brand: "LG", price: "GHC 7,000", desc: "LG gas cooker with additional gadgets, well equipped", img: "images/lg_cooker1.png" },
+    { brand: "LG", price: "GHC 9,999", desc: "LG burner with oven. Ultra-modern brand new product", img: "images/lg_cooker2.png" }
+  ]
+};
+
+function render(sectionId, items) {
+  const container = document.getElementById(sectionId);
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${item.img}" alt="${item.brand}" />
+      <div class="brand">${item.brand}</div>
+      <div class="price">${item.price}</div>
+      <div class="desc">${item.desc}</div>
+      <button class="order-btn">Order Now</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+render("tvs", data.tvs);
+render("washers", data.washers);
+render("aircons", data.aircons);
+render("fridges", data.fridges);
+render("cookers", data.cookers);
+</script>
+
+</body>
+</html>
